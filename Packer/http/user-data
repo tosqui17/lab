@@ -1,0 +1,26 @@
+#cloud-config
+autoinstall:
+  early-commands:
+    # Stop SSH to prevent Packer from connecting too early and crash
+    - systemctl stop ssh
+  version: 1
+  locale: it_IT
+  keyboard:
+    layout: it
+    variant: IT
+  identity:
+    hostname: cyberlab
+    username: vagrant
+    password: $6$rounds=4096$VFvGW9csWAO9/O$2NYtVojWcF.3/i5mZdejsFWDep9t4EWTO48GoxZsCmOhGwUppVZOpl9F89R2uRR.qFbYcUwP2GCnrMbgaMIch.
+  ssh:
+    install-server: yes
+    allow-pw: true
+  user-data:
+    disable_root: false
+    timezone: Europe/Rome
+  packages:
+    - python3
+    - open-vm-tools
+  late-commands:
+    - systemctl start ssh
+    - echo 'vagrant ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/vagrant

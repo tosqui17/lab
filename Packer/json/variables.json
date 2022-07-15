@@ -1,0 +1,8 @@
+{
+    "esxi_host": "{{ vault `/packer/esxi` `host`}}",
+    "esxi_datastore": "datastore1",
+    "esxi_username": "{{ vault `/packer/esxi` `username`}}",
+    "esxi_password": "{{ vault `/packer/esxi` `password` }}",
+    "esxi_network_with_dhcp_and_internet": "VM Network"
+}
+

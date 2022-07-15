@@ -1,0 +1,44 @@
+#########################################
+#  ESXI Provider host/login details
+#########################################
+#
+#   Use of variables here to hide/move the variables to a separate file
+#
+provider "esxi" {
+  esxi_hostname = var.esxi_hostname
+  esxi_hostport = var.esxi_hostport
+  esxi_username = var.esxi_username
+  esxi_password = var.esxi_password
+}
+
+#########################################
+#  ESXI Guest resource
+#########################################
+resource "esxi_guest" "Ubuntu2004" {
+  guest_name = "Ubuntu2004"
+  disk_store = var.esxi_datastore
+  guestos    = "ubuntu-64"
+  guest_startup_timeout  = 45
+  guest_shutdown_timeout = 30
+  memsize            = "8192"
+  numvcpus           = "4"
+  power              = "off"
+  boot_disk_type     = "thin"
+  boot_disk_size     = "17"
+
+
+  network_interfaces {
+    virtual_network = var.vm_network
+    mac_address     = "00:50:56:a3:b1:c2"
+    nic_type        = "e1000"
+  }
+
+  connection {
+    host        = self.ip_address
+    type        = "ssh"
+    user        = "vagrant"
+    password    = "vagrant"
+    }
+
+
+  }
